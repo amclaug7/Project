@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ToyotaDealerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customerID" />
+          </Key>
+          <Property Name="customerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lastname" Type="char" MaxLength="25" />
+          <Property Name="firstname" Type="char" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="inventory">
+          <Key>
+            <PropertyRef Name="inventoryID" />
+          </Key>
+          <Property Name="inventoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vin" Type="char" MaxLength="25" />
+          <Property Name="basecarmodel" Type="char" MaxLength="55" />
+          <Property Name="basecarmodelmsrp" Type="decimal" Precision="7" Scale="2" />
+          <Property Name="trimtype" Type="char" MaxLength="55" />
+          <Property Name="trimtypemsrp" Type="int" />
+          <Property Name="sold" Type="bit" />
+        </EntityType>
+        <EntityType Name="sales">
+          <Key>
+            <PropertyRef Name="salesID" />
+          </Key>
+          <Property Name="salesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventoryID" Type="int" />
+          <Property Name="customerID" Type="int" />
+          <Property Name="saledate" Type="date" />
+        </EntityType>
+        <Association Name="FK__sales__customerI__300424B4">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="sales" Type="Self.sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sales__inventory__2F10007B">
+          <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
+          <End Role="sales" Type="Self.sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory">
+              <PropertyRef Name="inventoryID" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="inventoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ToyotaDealerModelStoreContainer">
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory" EntityType="Self.inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sales" EntityType="Self.sales" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__sales__customerI__300424B4" Association="Self.FK__sales__customerI__300424B4">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sales__inventory__2F10007B" Association="Self.FK__sales__inventory__2F10007B">
+            <End Role="inventory" EntitySet="inventory" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ToyotaDealerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customerID" />
+          </Key>
+          <Property Name="customerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lastname" Type="String" MaxLength="25" FixedLength="true" Unicode="false" />
+          <Property Name="firstname" Type="String" MaxLength="25" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="sales" Relationship="Self.FK__sales__customerI__300424B4" FromRole="customer" ToRole="sales" />
+        </EntityType>
+        <EntityType Name="inventory">
+          <Key>
+            <PropertyRef Name="inventoryID" />
+          </Key>
+          <Property Name="inventoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vin" Type="String" MaxLength="25" FixedLength="true" Unicode="false" />
+          <Property Name="basecarmodel" Type="String" MaxLength="55" FixedLength="true" Unicode="false" />
+          <Property Name="basecarmodelmsrp" Type="Decimal" Precision="7" Scale="2" />
+          <Property Name="trimtype" Type="String" MaxLength="55" FixedLength="true" Unicode="false" />
+          <Property Name="trimtypemsrp" Type="Int32" />
+          <Property Name="sold" Type="Boolean" />
+          <NavigationProperty Name="sales" Relationship="Self.FK__sales__inventory__2F10007B" FromRole="inventory" ToRole="sales" />
+        </EntityType>
+        <EntityType Name="sale">
+          <Key>
+            <PropertyRef Name="salesID" />
+          </Key>
+          <Property Name="salesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventoryID" Type="Int32" />
+          <Property Name="customerID" Type="Int32" />
+          <Property Name="saledate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="customer" Relationship="Self.FK__sales__customerI__300424B4" FromRole="sales" ToRole="customer" />
+          <NavigationProperty Name="inventory" Relationship="Self.FK__sales__inventory__2F10007B" FromRole="sales" ToRole="inventory" />
+        </EntityType>
+        <Association Name="FK__sales__customerI__300424B4">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="sales" Type="Self.sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sales__inventory__2F10007B">
+          <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
+          <End Role="sales" Type="Self.sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory">
+              <PropertyRef Name="inventoryID" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="inventoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ToyotaDealerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="customers" EntityType="Self.customer" />
+          <EntitySet Name="inventories" EntityType="Self.inventory" />
+          <EntitySet Name="sales" EntityType="Self.sale" />
+          <AssociationSet Name="FK__sales__customerI__300424B4" Association="Self.FK__sales__customerI__300424B4">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sales__inventory__2F10007B" Association="Self.FK__sales__inventory__2F10007B">
+            <End Role="inventory" EntitySet="inventories" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ToyotaDealerModelStoreContainer" CdmEntityContainer="ToyotaDealerEntities">
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="ToyotaDealerModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventories">
+            <EntityTypeMapping TypeName="ToyotaDealerModel.inventory">
+              <MappingFragment StoreEntitySet="inventory">
+                <ScalarProperty Name="inventoryID" ColumnName="inventoryID" />
+                <ScalarProperty Name="vin" ColumnName="vin" />
+                <ScalarProperty Name="basecarmodel" ColumnName="basecarmodel" />
+                <ScalarProperty Name="basecarmodelmsrp" ColumnName="basecarmodelmsrp" />
+                <ScalarProperty Name="trimtype" ColumnName="trimtype" />
+                <ScalarProperty Name="trimtypemsrp" ColumnName="trimtypemsrp" />
+                <ScalarProperty Name="sold" ColumnName="sold" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sales">
+            <EntityTypeMapping TypeName="ToyotaDealerModel.sale">
+              <MappingFragment StoreEntitySet="sales">
+                <ScalarProperty Name="salesID" ColumnName="salesID" />
+                <ScalarProperty Name="inventoryID" ColumnName="inventoryID" />
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+                <ScalarProperty Name="saledate" ColumnName="saledate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
