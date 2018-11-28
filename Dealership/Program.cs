@@ -16,7 +16,7 @@ namespace Dealership
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Dealership());
+            Application.Run(new LogInPage());
         }
     }
 }

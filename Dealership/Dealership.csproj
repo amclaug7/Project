@@ -53,16 +53,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dealership.cs">
+    <Compile Include="FactoryOrder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dealership.Designer.cs">
-      <DependentUpon>Dealership.cs</DependentUpon>
+    <Compile Include="FactoryOrder.Designer.cs">
+      <DependentUpon>FactoryOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SalesRecords.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SalesRecords.Designer.cs">
+      <DependentUpon>SalesRecords.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogInPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogInPage.Designer.cs">
+      <DependentUpon>LogInPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Dealership.resx">
-      <DependentUpon>Dealership.cs</DependentUpon>
+    <EmbeddedResource Include="FactoryOrder.resx">
+      <DependentUpon>FactoryOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalesRecords.resx">
+      <DependentUpon>SalesRecords.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogInPage.resx">
+      <DependentUpon>LogInPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
