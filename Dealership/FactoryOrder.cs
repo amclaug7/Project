@@ -12,7 +12,7 @@ namespace Dealership
             InitializeComponent();
         }
 
-        SqlConnection sqlcon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Andrew\Desktop\ToyotaDealer.mdf;Integrated Security=True;Connect Timeout=30");
+        SqlConnection sqlcon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Andrew\source\repos\Final Project\DealerDatabase\ToyotaDealer.mdf;Integrated Security=True");
 
         string vin;
         int basecarID;
