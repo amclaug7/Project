@@ -18,6 +18,7 @@ namespace Dealership
         int basecarID;
         int trimID;
 
+
         private void FactoryOrder_Load(object sender, EventArgs e)
         {
             string query = "select basecarmodel " +
@@ -32,6 +33,9 @@ namespace Dealership
             }
             
             fillInventoryDataTable();
+
+            cbxModel.SelectedIndex = -1;
+            cbxTrim.SelectedIndex = -1;
         }
 
         private void fillInventoryDataTable()
@@ -39,22 +43,22 @@ namespace Dealership
             string query = "select vin, basecarmodel, trimtype " +
                             "from inventory, basecar, trim " +
                             "where inventory.basecarID = basecar.basecarID " +
-                            "and inventory.trimID = trim.trimID " +
-                            "and sold = 0";
+                            "and inventory.trimID = trim.trimID;";
             SqlDataAdapter sda = new SqlDataAdapter(query, sqlcon);
             DataTable dtbl = new DataTable();
             sda.Fill(dtbl);
 
             foreach (DataRow row in dtbl.Rows)
             {
-                listBox1.Items.Add($"{row["vin"].ToString().Trim()}\t" +
-                    $"{row["basecarmodel"].ToString().Trim()}\t{row["trimtype"].ToString().Trim()}");
+                lbxInventory.Items.Add($"{row["basecarmodel"].ToString().Trim()}\t" +
+                    $"{row["trimtype"].ToString().Trim()}");
             }
         }
 
         private void cbxModel_SelectedIndexChanged(object sender, EventArgs e)
         {
             basecarID = cbxModel.SelectedIndex + 1;
+            cbxTrim.Items.Clear();
 
             string query2 = $"select trimtype " +
                             $"from trim " +
@@ -71,25 +75,62 @@ namespace Dealership
 
         private void btnAddInventory_Click(object sender, EventArgs e)
         {
-            trimID = cbxTrim.SelectedIndex + 1;
-            vin = "AAAAAAAAAAAAAAAA";
+            if (cbxModel.SelectedIndex == -1 || cbxTrim.SelectedIndex == -1)
+            {
+                MessageBox.Show("Select Model and Trim");
+            }
+            else
+            {
+                if (cbxModel.SelectedIndex == 0)
+                {
+                    trimID = cbxTrim.SelectedIndex + 1;
+                }
+                else if(cbxModel.SelectedIndex == 1)
+                {
+                    trimID = cbxTrim.SelectedIndex + 4;
+                }
+                else if(cbxModel.SelectedIndex == 2)
+                {
+                    trimID = cbxTrim.SelectedIndex + 7;
+                }
+                else
+                {
+                    trimID = cbxTrim.SelectedIndex + 10;
+                }
 
-            string queryMakeOrder = $"insert into inventory values('{vin}',{basecarID},{trimID},0);";
-            SqlDataAdapter MakeOrdersda = new SqlDataAdapter(queryMakeOrder, sqlcon);
-            DataTable Orderdtbl = new DataTable();
-            MakeOrdersda.Fill(Orderdtbl);
+                vin = "AAAAAAAAAAAAAAAA";
 
-            listBox1.Items.Clear();
-            fillInventoryDataTable();
+                string queryMakeOrder = $"insert into inventory values('{vin}',{basecarID},{trimID},0);";
+                SqlDataAdapter MakeOrdersda = new SqlDataAdapter(queryMakeOrder, sqlcon);
+                DataTable Orderdtbl = new DataTable();
+                MakeOrdersda.Fill(Orderdtbl);
 
-            basecarID = 0;
-            trimID = 0;
+                lbxInventory.Items.Clear();
+                fillInventoryDataTable();
 
-            cbxModel.SelectedIndex = -1;
-            cbxTrim.SelectedIndex = -1;
-            cbxTrim.Items.Clear();
+                basecarID = 0;
+                trimID = 0;
 
-            MessageBox.Show("Car Ordered");
-        }        
+                cbxModel.SelectedIndex = -1;
+                cbxTrim.SelectedIndex = -1;
+                cbxTrim.Items.Clear();
+
+                MessageBox.Show("Car Ordered");
+            }
+        }
+
+        private void btnLogOut_Click(object sender, EventArgs e)
+        {
+            var f = new LogInPage();
+
+            this.Hide();
+            f.ShowDialog();
+            this.Close();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }       
     }
 }
