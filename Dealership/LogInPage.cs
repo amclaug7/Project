@@ -14,6 +14,12 @@ namespace Dealership
 
         SqlConnection sqlcon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Andrew\source\repos\Final Project\DealerDatabase\ToyotaDealer.mdf;Integrated Security=True;Connect Timeout=30");
 
+
+        private void LogInPage_Load(object sender, EventArgs e)
+        {
+            tbxPassword.UseSystemPasswordChar = true;
+        }
+
         private void btnCheckCredentials_Click(object sender, EventArgs e)
         {
             var f = new SalesRecords();
@@ -34,8 +40,8 @@ namespace Dealership
                 {
                     if (row["password"].ToString().Trim() != password)
                     {
-                        MessageBox.Show("Incorrect Password");
-                        Console.WriteLine($"{username} {password}");
+                        MessageBox.Show("Incorrect Password", "Error", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
                     else
                     {
@@ -56,7 +62,8 @@ namespace Dealership
             }
             else
             {
-                MessageBox.Show("User Not Found");
+                MessageBox.Show("User Not Found", "Error", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
             }            
         }
     }

@@ -126,7 +126,8 @@ namespace Dealership
                 }
                 else
                 {
-                    MessageBox.Show("Car Already Sold");
+                    MessageBox.Show("Car Already Sold", "Error", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                 }
             }
         }        
@@ -135,7 +136,8 @@ namespace Dealership
         {
             if (inventoryID == 0 || customerID == 0)
             {
-                MessageBox.Show("Select a Customer and a Car");
+                MessageBox.Show("Select a Customer and a Car", "Error", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
             }
             else
             {
@@ -157,8 +159,9 @@ namespace Dealership
                 lblCarSelection2.Text = "";
                 lblCustomerName.Text = "";
                 lblCustomerNameReview.Text = "";
-
-                MessageBox.Show("Car Sold");
+                
+                MessageBox.Show("Car Sold", "", MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
             }
         }
 

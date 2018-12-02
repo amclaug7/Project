@@ -77,7 +77,8 @@ namespace Dealership
         {
             if (cbxModel.SelectedIndex == -1 || cbxTrim.SelectedIndex == -1)
             {
-                MessageBox.Show("Select Model and Trim");
+                MessageBox.Show("Select Model and Trim", "Error", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
             }
             else
             {
@@ -114,8 +115,9 @@ namespace Dealership
                 cbxModel.SelectedIndex = -1;
                 cbxTrim.SelectedIndex = -1;
                 cbxTrim.Items.Clear();
-
-                MessageBox.Show("Car Ordered");
+                
+                MessageBox.Show("Car Ordered", "", MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
             }
         }
 

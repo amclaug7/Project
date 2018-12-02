@@ -89,6 +89,7 @@
             this.Controls.Add(this.btnCheckCredentials);
             this.Name = "LogInPage";
             this.Text = "LogInPage";
+            this.Load += new System.EventHandler(this.LogInPage_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
