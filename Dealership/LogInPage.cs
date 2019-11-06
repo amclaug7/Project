@@ -30,18 +30,6 @@ namespace Dealership
 			string username = tbxUsername.Text;
             string password = tbxPassword.Text;
 
-			string sha256(string randomString)
-			{
-				var crypt = new SHA256Managed();
-				var hash = new StringBuilder();
-				byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(randomString));
-				foreach (byte theByte in crypto)
-				{
-					hash.Append(theByte.ToString("x2"));
-				}
-				return hash.ToString();
-			}
-
 			string query = $"select username, password, employeetype from employee " +
                            $"where username = '{username}'";
             SqlDataAdapter sda = new SqlDataAdapter(query, sqlcon);
@@ -52,7 +40,7 @@ namespace Dealership
             {
                 foreach (DataRow row in dtbl.Rows)
                 {
-                    if (row["password"].ToString().Trim() != sha256(password))
+                    if (row["password"].ToString().Trim() != password)
                     {
                         MessageBox.Show("Incorrect Password", "Error", MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
