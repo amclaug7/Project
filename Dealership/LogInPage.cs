@@ -2,9 +2,6 @@
 using System.Data;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Security.Cryptography;
-using System.Text;
-
 namespace Dealership
 {
     public partial class LogInPage : Form
