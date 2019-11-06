@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+
 namespace Dealership
 {
     public partial class LogInPage : Form
